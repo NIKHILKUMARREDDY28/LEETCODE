@@ -14,13 +14,12 @@
  * }
  */
 class Solution {
-   public int sum(TreeNode n, int s){
-	if (n == null) return 0;
-	if (n.right == null && n.left == null) return s*10 + n.val;
-	return sum(n.left, s*10 + n.val) + sum(n.right, s*10 + n.val);
-}
+    private int f(TreeNode cur,int var){
+        if (cur == null) return 0;
+        if (cur.left == null && cur.right == null) return var * 10 + cur.val;
+        return f(cur.left,var * 10 + cur.val) + f(cur.right,var * 10 + cur.val);
+    }
     public int sumNumbers(TreeNode root) {
-        return sum(root,0);
-        
+        return f(root,0);
     }
 }
