@@ -1,16 +1,12 @@
 class Solution {
     public int minDeletions(String s) {
-        HashMap<Character,Integer> freq = new HashMap<>();
+        int[] freq = new int[26];
         int count = 0;
         HashSet<Integer> uniq = new HashSet<>();
         for(char a:s.toCharArray()){
-            if(freq.containsKey(a)){
-                int b = freq.get(a);
-                freq.put(a,++b);
-            }
-            else freq.put(a,1);
+           freq[a-'a'] ++;
         }
-        for(int i: freq.values()){
+        for(int i: freq){
             while( uniq.contains(i) && i != 0){
                 --i;
                 ++ count;
