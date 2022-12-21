@@ -1,59 +1,33 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
+        long targe = target;
         Arrays.sort(nums);
-        return kSum(nums, target, 0, 4);
-    }
-	
-    public List<List<Integer>> kSum(int[] nums, long target, int start, int k) {
-        List<List<Integer>> res = new ArrayList<>();
-
-        // If we have run out of numbers to add, return res.
-        if (start == nums.length) {
-            return res;
-        }
-        
-        // There are k remaining values to add to the sum. The 
-        // average of these values is at least target / k.
-        long average_value = target / k;
-        
-        // We cannot obtain a sum of target if the smallest value
-        // in nums is greater than target / k or if the largest 
-        // value in nums is smaller than target / k.
-        if  (nums[start] > average_value || average_value > nums[nums.length - 1]) {
-            return res;
-        }
-        
-        if (k == 2) {
-            return twoSum(nums, target, start);
-        }
-    
-        for (int i = start; i < nums.length; ++i) {
-            if (i == start || nums[i - 1] != nums[i]) {
-                for (List<Integer> subset : kSum(nums, target - nums[i], i + 1, k - 1)) {
-                    res.add(new ArrayList<>(Arrays.asList(nums[i])));
-                    res.get(res.size() - 1).addAll(subset);
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        if (n < 4) return ans;
+        for(int i=0;i<n-3;i++){
+            for(int j=i+1;j<n-2;j++){
+                int left = j+1,right = n-1;
+                long tar = targe - nums[i] - nums[j];
+                while(left < right){
+                    long cur = nums[left] + nums[right];
+                    if(cur == tar){
+                        List<Integer> quad = new ArrayList<>();
+                        quad.add(nums[i]);
+                        quad.add(nums[j]);
+                        quad.add(nums[left]);
+                        quad.add(nums[right]);
+                        ans.add(quad);
+                        while(++left < n && nums[left] == quad.get(2));
+                        while(--right > 0 && nums[right] == quad.get(3));
+                    }else if(cur > tar) right--;
+                    else left++;
                 }
+                while(j+1 < n-2 && nums[j] == nums[j+1]) j++;
             }
+            while(i+1 < n-3 && nums[i] == nums[i+1]) i++;
         }
-    
-        return res;
-    }
-	
-    public List<List<Integer>> twoSum(int[] nums, long target, int start) {
-        List<List<Integer>> res = new ArrayList<>();
-        int lo = start, hi = nums.length - 1;
-    
-        while (lo < hi) {
-            int currSum = nums[lo] + nums[hi];
-            if (currSum < target || (lo > start && nums[lo] == nums[lo - 1])) {
-                ++lo;
-            } else if (currSum > target || (hi < nums.length - 1 && nums[hi] == nums[hi + 1])) {
-                --hi;
-            } else {
-                res.add(Arrays.asList(nums[lo++], nums[hi--]));
-            }
-        }
-                                                          
-        return res;
+        return ans;
+        
     }
 }
