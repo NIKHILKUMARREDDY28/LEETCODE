@@ -31,15 +31,32 @@ class GFG {
 }
 // } Driver Code Ends
 
-
+class Pair{
+    int nod;
+    int par;
+    public Pair(int nod,int par){
+        this.nod = nod;
+        this.par = par;
+    }
+}
 class Solution {
     // Function to detect cycle in an undirected graph.
     private boolean has_cycle(int node,int parent,boolean[] vis,ArrayList<ArrayList<Integer>> adj){
         vis[node] = true;
-        for(Integer it : adj.get(node)){
-            if(vis[it] == false){
-                if(has_cycle(it,node,vis,adj)) return true;
-            }else if(it != parent) return true;
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(node,parent));
+        while(!q.isEmpty()){
+            int cur = q.peek().nod;
+            int pare = q.peek().par;
+            q.remove();
+            for(Integer it : adj.get(cur)){
+                if(vis[it] == false){
+                    vis[it] = true;
+                    q.add(new Pair(it,cur));
+                }else if(it != pare){
+                    return true;
+                }
+            }
         }
         return false;
     }
