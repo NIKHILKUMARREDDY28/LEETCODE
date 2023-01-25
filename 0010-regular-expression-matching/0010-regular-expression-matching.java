@@ -7,9 +7,7 @@ class Solution {
         if (ind > s.length() || mat > p.length()) return 0;
         if (dp[ind][mat] != -1) return dp[ind][mat];
         else {
-            if (mat == p.length()) {
-                return (ind == s.length()) ? 1 : 0;
-            }
+            
             boolean f_w = ind < s.length()
                     && (s.charAt(ind) == p.charAt(mat) || p.charAt(mat) == '.');
             int first = (f_w) ? 1 : 0;
