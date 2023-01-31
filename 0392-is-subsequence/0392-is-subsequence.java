@@ -9,6 +9,6 @@ class Solution {
                 p ++;
             }
         }
-        return p >= s.length();
+        return p == s.length();
     }
 }
