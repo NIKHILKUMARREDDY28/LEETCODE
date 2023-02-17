@@ -1,7 +1,7 @@
 class Solution {
     private int f(int i,int j,String s,String p,int[][] dp){
-        if(j >= p.length()) return  i>=s.length() ? 1 : 0;
-        else if(i>= s.length()){
+        if(j == p.length()) return  i==s.length() ? 1 : 0;
+        else if(i== s.length()){
             for(int c = j ;c <p.length();c++){
                 if(p.charAt(c) != '*') return 0;
             }
