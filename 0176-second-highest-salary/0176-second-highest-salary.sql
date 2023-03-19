@@ -1,0 +1,1 @@
+SELECT MAX(salary) as "SecondHighestSalary" from (SELECT salary,DENSE_RANK() OVER(ORDER BY salary DESC) as "rank" from Employee) t where t.rank = 2;
