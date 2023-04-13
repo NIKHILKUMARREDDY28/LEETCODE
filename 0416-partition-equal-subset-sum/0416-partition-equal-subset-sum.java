@@ -2,7 +2,8 @@ class Solution {
     static int helper(int ind,int sum,int tar,int[] nums,int[][] dp){
         if(ind == nums.length) return (sum == tar) ? 1 : 0;
         if(dp[ind][sum] != -1) return dp[ind][sum];
-        int take = helper(ind+1,sum+nums[ind],tar,nums,dp);
+        int take = 0;
+        if(sum+nums[ind] <= tar) take = helper(ind+1,sum+nums[ind],tar,nums,dp);
         int not = helper(ind+1,sum,tar,nums,dp);
         dp[ind][sum] = take | not;
         return dp[ind][sum];
